@@ -1,6 +1,10 @@
+# IntelliJ Idea
+/.idea/
+*.imi
 
+# build result
 target/
 
-/.idea/
+# ?
+.history
 
-*.imi

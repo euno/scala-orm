@@ -14,7 +14,7 @@ trait Tables {
   import scala.slick.jdbc.{GetResult => GR}
   
   /** DDL for all tables. Call .create to execute. */
-  lazy val ddl = History.ddl ++ Product.ddl ++ ProductCategory.ddl ++ ProductTag.ddl ++ ProductTypeA.ddl ++ ProductTypeB.ddl ++ RelChildProductTag.ddl
+  lazy val ddl = History.ddl ++ Product.ddl ++ ProductCategory.ddl ++ ProductTag.ddl ++ ProductTypeA.ddl ++ ProductTypeB.ddl ++ RelProductProductTag.ddl
   
   /** Entity class storing rows of table History
    *  @param historyId Database column history_id DBType(INT), AutoInc, PrimaryKey
@@ -178,34 +178,34 @@ trait Tables {
   /** Collection-like TableQuery object for table ProductTypeB */
   lazy val ProductTypeB = new TableQuery(tag => new ProductTypeB(tag))
   
-  /** Entity class storing rows of table RelChildProductTag
+  /** Entity class storing rows of table RelProductProductTag
    *  @param productId Database column product_id DBType(INT)
    *  @param productTagId Database column product_tag_id DBType(INT) */
-  case class RelChildProductTagRow(productId: Int, productTagId: Int)
-  /** GetResult implicit for fetching RelChildProductTagRow objects using plain SQL queries */
-  implicit def GetResultRelChildProductTagRow(implicit e0: GR[Int]): GR[RelChildProductTagRow] = GR{
+  case class RelProductProductTagRow(productId: Int, productTagId: Int)
+  /** GetResult implicit for fetching RelProductProductTagRow objects using plain SQL queries */
+  implicit def GetResultRelProductProductTagRow(implicit e0: GR[Int]): GR[RelProductProductTagRow] = GR{
     prs => import prs._
-    RelChildProductTagRow.tupled((<<[Int], <<[Int]))
+    RelProductProductTagRow.tupled((<<[Int], <<[Int]))
   }
-  /** Table description of table rel_child_product_tag. Objects of this class serve as prototypes for rows in queries. */
-  class RelChildProductTag(_tableTag: Tag) extends Table[RelChildProductTagRow](_tableTag, "rel_child_product_tag") {
-    def * = (productId, productTagId) <> (RelChildProductTagRow.tupled, RelChildProductTagRow.unapply)
+  /** Table description of table rel_product_product_tag. Objects of this class serve as prototypes for rows in queries. */
+  class RelProductProductTag(_tableTag: Tag) extends Table[RelProductProductTagRow](_tableTag, "rel_product_product_tag") {
+    def * = (productId, productTagId) <> (RelProductProductTagRow.tupled, RelProductProductTagRow.unapply)
     /** Maps whole row to an option. Useful for outer joins. */
-    def ? = (productId.?, productTagId.?).shaped.<>({r=>import r._; _1.map(_=> RelChildProductTagRow.tupled((_1.get, _2.get)))}, (_:Any) =>  throw new Exception("Inserting into ? projection not supported."))
+    def ? = (productId.?, productTagId.?).shaped.<>({r=>import r._; _1.map(_=> RelProductProductTagRow.tupled((_1.get, _2.get)))}, (_:Any) =>  throw new Exception("Inserting into ? projection not supported."))
     
     /** Database column product_id DBType(INT) */
     val productId: Column[Int] = column[Int]("product_id")
     /** Database column product_tag_id DBType(INT) */
     val productTagId: Column[Int] = column[Int]("product_tag_id")
     
-    /** Primary key of RelChildProductTag (database name rel_child_product_tag_PK) */
-    val pk = primaryKey("rel_child_product_tag_PK", (productId, productTagId))
+    /** Primary key of RelProductProductTag (database name rel_product_product_tag_PK) */
+    val pk = primaryKey("rel_product_product_tag_PK", (productId, productTagId))
     
-    /** Foreign key referencing Product (database name rel_child_product_tag_ibfk_1) */
-    lazy val productFk = foreignKey("rel_child_product_tag_ibfk_1", productId, Product)(r => r.productId, onUpdate=ForeignKeyAction.NoAction, onDelete=ForeignKeyAction.NoAction)
-    /** Foreign key referencing ProductTag (database name rel_child_product_tag_ibfk_2) */
-    lazy val productTagFk = foreignKey("rel_child_product_tag_ibfk_2", productTagId, ProductTag)(r => r.productTagId, onUpdate=ForeignKeyAction.NoAction, onDelete=ForeignKeyAction.NoAction)
+    /** Foreign key referencing Product (database name rel_product_product_tag_ibfk_1) */
+    lazy val productFk = foreignKey("rel_product_product_tag_ibfk_1", productId, Product)(r => r.productId, onUpdate=ForeignKeyAction.NoAction, onDelete=ForeignKeyAction.NoAction)
+    /** Foreign key referencing ProductTag (database name rel_product_product_tag_ibfk_2) */
+    lazy val productTagFk = foreignKey("rel_product_product_tag_ibfk_2", productTagId, ProductTag)(r => r.productTagId, onUpdate=ForeignKeyAction.NoAction, onDelete=ForeignKeyAction.NoAction)
   }
-  /** Collection-like TableQuery object for table RelChildProductTag */
-  lazy val RelChildProductTag = new TableQuery(tag => new RelChildProductTag(tag))
+  /** Collection-like TableQuery object for table RelProductProductTag */
+  lazy val RelProductProductTag = new TableQuery(tag => new RelProductProductTag(tag))
 }

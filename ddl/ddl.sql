@@ -5,7 +5,7 @@ SET SESSION FOREIGN_KEY_CHECKS=0;
 DROP TABLE IF EXISTS product_type_a;
 DROP TABLE IF EXISTS product_type_b;
 DROP TABLE IF EXISTS history;
-DROP TABLE IF EXISTS rel_child_product_tag;
+DROP TABLE IF EXISTS rel_product_product_tag;
 DROP TABLE IF EXISTS product;
 DROP TABLE IF EXISTS product_category;
 DROP TABLE IF EXISTS product_tag;
@@ -57,7 +57,7 @@ CREATE TABLE product_category
 );
 
 
-CREATE TABLE rel_child_product_tag
+CREATE TABLE rel_product_product_tag
 (
 	product_id int NOT NULL,
 	product_tag_id int NOT NULL,
@@ -92,7 +92,7 @@ ALTER TABLE product_type_b
 ;
 
 
-ALTER TABLE rel_child_product_tag
+ALTER TABLE rel_product_product_tag
 	ADD FOREIGN KEY (product_id)
 	REFERENCES product (product_id)
 	ON UPDATE RESTRICT
@@ -116,7 +116,7 @@ ALTER TABLE product
 ;
 
 
-ALTER TABLE rel_child_product_tag
+ALTER TABLE rel_product_product_tag
 	ADD FOREIGN KEY (product_tag_id)
 	REFERENCES product_tag (product_tag_id)
 	ON UPDATE RESTRICT
