@@ -1,0 +1,9 @@
+# コード生成はテーブルごとに実行する必要あり(めんどくさ)
+
+scalikejdbc-gen product_category
+scalikejdbc-gen product
+scalikejdbc-gen product_type_a
+scalikejdbc-gen product_type_b
+scalikejdbc-gen product_tag
+scalikejdbc-gen rel_child_product_tag
+scalikejdbc-gen history
